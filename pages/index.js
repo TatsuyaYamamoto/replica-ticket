@@ -1,12 +1,24 @@
 /** @jsx jsx */
+import { useState } from "react";
 import Head from "next/head";
 
 import { jsx } from "@emotion/core";
 
 import styles from "../styles/Home.module.css";
 import TicketingMachine from "../src/components/TicketingMachine";
+import ResultOverlay from "../src/components/ResultOverlay";
 
 export default function Home() {
+  const [inputText, setInputText] = useState(null);
+
+  const handleResultOverlay = () => {
+    setInputText(null);
+  };
+
+  const issueTicket = (text) => {
+    setInputText(text);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +34,7 @@ export default function Home() {
           </a>
         </h1>
 
-        <TicketingMachine />
+        <TicketingMachine onIssueTicket={issueTicket} />
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -41,6 +53,8 @@ export default function Home() {
           <a href="http://www.sokontokoro-factory.net/">そこんところ工房</a>
         </a>
       </footer>
+
+      <ResultOverlay text={inputText} handleClose={handleResultOverlay} />
     </div>
   );
 }

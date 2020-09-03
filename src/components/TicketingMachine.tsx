@@ -1,10 +1,30 @@
 /** @jsx jsx */
-import React, { FC } from "react";
+import React, { ChangeEvent, FC, useMemo, useState } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { TextField, Button } from "@material-ui/core";
 
-const TicketingMachine: FC = () => {
+interface TicketingMachineProps {
+  onIssueTicket: (text: string) => void;
+}
+
+const TicketingMachine: FC<TicketingMachineProps> = (props) => {
+  const { onIssueTicket } = props;
+  const [inputValue, setInputValue] = useState("");
+  const canIssue = useMemo(() => inputValue !== "", [inputValue]);
+
+  const onClickButton = () => {
+    if (!canIssue) {
+      return;
+    }
+
+    onIssueTicket(inputValue);
+  };
+
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   return (
     <div
       css={css`
@@ -33,10 +53,15 @@ const TicketingMachine: FC = () => {
           `}
         >
           <div>
-            <TextField />
+            <TextField value={inputValue} onChange={onChange} />
             <br />
             <br />
-            <Button variant="outlined" fullWidth={true}>
+            <Button
+              variant="outlined"
+              fullWidth={true}
+              disabled={!canIssue}
+              onClick={onClickButton}
+            >
               発券
             </Button>
           </div>
