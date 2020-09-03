@@ -25,25 +25,27 @@ const TicketingMachine: FC<TicketingMachineProps> = (props) => {
     setInputValue(e.target.value);
   };
 
+  const unit = 10;
+
   return (
     <div
       css={css`
         background-color: rgb(46, 154, 234);
-        border-radius: 30px 30px 0 0;
-        padding: 30px 30px 100px;
+        border-radius: ${unit * 3}px ${unit * 3}px 0 0;
+        padding: ${unit * 3}px ${unit * 3}px 100px;
       `}
     >
       <div
         css={css`
           background-color: black;
-          border-radius: 10px;
-          padding: 30px;
+          border-radius: ${unit}px;
+          padding: ${unit * 3}px;
         `}
       >
         <div
           css={css`
-            width: 400px;
-            height: 300px;
+            width: ${unit * 6 * 4}px;
+            height: ${unit * 6 * 3}px;
 
             display: flex;
             justify-content: center;

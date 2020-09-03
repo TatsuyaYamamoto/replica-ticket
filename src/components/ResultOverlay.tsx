@@ -12,9 +12,9 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   const { text, handleClose } = props;
   const open = !!text;
 
-  const onClickSaveImage = (e:string) => {};
+  const onClickSaveImage = (e: string) => {};
 
-  const onClickShare = (e:string) => {};
+  const onClickShare = (e: string) => {};
 
   return (
     <Backdrop
@@ -28,22 +28,39 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
         align-items: center;
       `}
     >
-      <img
-        src={`/images/ticket_base.jpg`}
+      <div
         css={css`
-          max-width: 90%;
-        `}
-      />
-      <span
-        css={css`
-          position: absolute;
-          top: 55%;
-          left: 70%;
+          position: relative;
+          width: 90%;
         `}
       >
-        {text}
-      </span>
-
+        <img
+          src={`/images/ticket_base.jpg`}
+          css={css`
+            width: 100%;
+          `}
+        />
+        <span
+          css={css`
+            position: absolute;
+            font-size: 1.5vw;
+            top: 83%;
+            left: 66%;
+          `}
+        >
+          {text}
+        </span>
+        <span
+          css={css`
+            position: absolute;
+            font-size: 1.5vw;
+            top: 85%;
+            left: 85%;
+          `}
+        >
+          {text}
+        </span>
+      </div>
       <div
         css={css`
           position: fixed;
