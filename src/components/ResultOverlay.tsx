@@ -69,6 +69,29 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
         `}
       >
         <div
+          css={css`
+            position: fixed;
+            top: 10px;
+            color: white;
+            text-align: center;
+          `}
+        >
+          <div
+            css={css`
+              font-size: 30px;
+            `}
+          >
+            発券完了！
+          </div>
+          <div
+            css={css`
+              font-size: 16px;
+            `}
+          >
+            レプリカチケットを保存して、Twitterでシェアしよう！
+          </div>
+        </div>
+        <div
           ref={ticketRef}
           css={css`
             position: relative;
@@ -122,7 +145,14 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
           >
             画像を保存
           </Button>
-          <Button variant="contained" color="primary" onClick={onClickShare}>
+          <Button
+            variant="contained"
+            color="primary"
+            css={css`
+              text-transform: none;
+            `}
+            onClick={onClickShare}
+          >
             Twitterでシェア
           </Button>
         </div>

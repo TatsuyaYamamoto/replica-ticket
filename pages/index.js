@@ -2,11 +2,15 @@
 import { useState } from "react";
 import Head from "next/head";
 
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
+
+import { IconButton } from "@material-ui/core";
+import { HelpOutline as HelpIcon } from "@material-ui/icons";
 
 import styles from "../styles/Home.module.css";
 import TicketingMachine from "../src/components/TicketingMachine";
 import ResultOverlay from "../src/components/ResultOverlay";
+import HelpDialog from "../src/components/HelpDialog";
 
 const title = "ラブライブ！レプリカチケット発券機";
 const description = `レプリカチケットの発券をサポートするアプリです。Aqoursのライブに行こう！！`;
@@ -14,6 +18,11 @@ const keywords = "ラブライブ！,LoveLive！,Aqours";
 
 export default function Home() {
   const [inputText, setInputText] = useState(null);
+  const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+
+  const handleHelpDialog = () => {
+    setHelpDialogOpen((prev) => !prev);
+  };
 
   const handleResultOverlay = () => {
     setInputText(null);
@@ -45,6 +54,17 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
+      <IconButton
+        onClick={handleHelpDialog}
+        css={css`
+          position: fixed !important;
+          top: 10px;
+          right: 10px;
+        `}
+      >
+        <HelpIcon />
+      </IconButton>
+
       <main className={styles.main}>
         <TicketingMachine onIssueTicket={issueTicket} />
 
@@ -73,6 +93,7 @@ export default function Home() {
       </footer>
 
       <ResultOverlay text={inputText} handleClose={handleResultOverlay} />
+      <HelpDialog open={helpDialogOpen} handleClose={handleHelpDialog} />
     </div>
   );
 }
