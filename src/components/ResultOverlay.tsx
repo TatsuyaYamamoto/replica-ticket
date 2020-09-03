@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { FC } from "react";
+import React, { FC, MouseEvent } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Backdrop, Button } from "@material-ui/core";
@@ -12,9 +12,21 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   const { text, handleClose } = props;
   const open = !!text;
 
-  const onClickSaveImage = (e: string) => {};
+  const onClickSaveImage = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
 
-  const onClickShare = (e: string) => {};
+  const onClickShare = (e: MouseEvent) => {
+    e.stopPropagation();
+    const baseUrl = `https://twitter.com/intent/tweet`;
+    const text = encodeURIComponent(
+      `「Aqours Back In 5th LoveLive! ～Next SPARKLING!!～」に向けて、レプリカチケットの発券しよう！`
+    );
+    const hashtags = ["lovelive", "そこんところ工房"].join(",");
+    const url = encodeURIComponent(``);
+
+    window.open(`${baseUrl}?text=${text}&hashtags=${hashtags}&url=${url}`);
+  };
 
   return (
     <Backdrop
@@ -65,11 +77,19 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
         css={css`
           position: fixed;
           bottom: 0;
+          margin: 20px 0;
+          width: 100%;
+
+          display: flex;
+          justify-content: space-around;
         `}
       >
-        {" "}
-        <Button onClick={onClickSaveImage}>画像を保存</Button>
-        <Button onClick={onClickShare}>Twitterでシェア</Button>
+        <Button variant="contained" onClick={onClickSaveImage}>
+          画像を保存
+        </Button>
+        <Button variant="contained" onClick={onClickShare}>
+          Twitterでシェア
+        </Button>
       </div>
     </Backdrop>
   );
