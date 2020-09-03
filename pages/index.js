@@ -27,18 +27,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Go!{" "}
-          <a href="http://www.lovelive-anime.jp/uranohoshi/news.php?id=6728">
-            Next Sparkling!
-          </a>
-        </h1>
-
         <TicketingMachine onIssueTicket={issueTicket} />
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <p>ラブライブ！に感謝と声援を</p>
+          <a
+            href="http://www.lovelive-anime.jp/uranohoshi/news.php?id=6728"
+            target="_blank"
+            className={styles.card}
+          >
+            <p>Aqours声援を</p>
           </a>
         </div>
       </main>
@@ -50,7 +47,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{" "}
-          <a href="http://www.sokontokoro-factory.net/">そこんところ工房</a>
+          <a href="http://www.sokontokoro-factory.net/" target="_blank">
+            そこんところ工房
+          </a>
         </a>
       </footer>
 
