@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import React, { FC, MouseEvent } from "react";
+import React, { FC, MouseEvent, useRef } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Backdrop, Button } from "@material-ui/core";
+import domtoimage from "dom-to-image";
 
 interface ResultOverlayProps {
   text: string;
@@ -11,9 +12,19 @@ interface ResultOverlayProps {
 const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   const { text, handleClose } = props;
   const open = !!text;
+  const ticketRef = useRef(null);
 
   const onClickSaveImage = (e: MouseEvent) => {
     e.stopPropagation();
+
+    domtoimage
+      .toJpeg(ticketRef.current, { quality: 0.95 })
+      .then(function (dataUrl) {
+        const link = document.createElement("a");
+        link.download = "my-image-name.jpeg";
+        link.href = dataUrl;
+        link.click();
+      });
   };
 
   const onClickShare = (e: MouseEvent) => {
@@ -41,6 +52,7 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
       `}
     >
       <div
+        ref={ticketRef}
         css={css`
           position: relative;
           width: 90%;
