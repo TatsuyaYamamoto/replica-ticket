@@ -45,7 +45,11 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
     const text = encodeURIComponent(
       `「Aqours Back In 5th LoveLive! ～Next SPARKLING!!～」に向けて、レプリカチケットの発券しよう！`
     );
-    const hashtags = ["lovelive", "そこんところ工房"].join(",");
+    const hashtags = [
+      "lovelive",
+      "そこんところ工房",
+      "レプリカチケット発券機",
+    ].join(",");
     const url = encodeURIComponent(``);
 
     window.open(`${baseUrl}?text=${text}&hashtags=${hashtags}&url=${url}`);

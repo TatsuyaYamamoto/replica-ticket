@@ -8,6 +8,10 @@ import styles from "../styles/Home.module.css";
 import TicketingMachine from "../src/components/TicketingMachine";
 import ResultOverlay from "../src/components/ResultOverlay";
 
+const title = "ラブライブ！レプリカチケット発券機";
+const description = `レプリカチケットの発券をサポートするアプリです。Aqoursのライブに行こう！！`;
+const keywords = "ラブライブ！,LoveLive！,Aqours";
+
 export default function Home() {
   const [inputText, setInputText] = useState(null);
 
@@ -22,8 +26,23 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Out Ticketing</title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
+
+        <meta name="description" content={description} />
+        <meta name="keywords" content={keywords} />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+        <meta property="og:title" content={title} />
+        <meta property="og:site_name" content={title} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://replica-ticket.web.app/" />
+        <meta
+          property="og:image"
+          content="https://replica-ticket.web.app/images/ogp.png"
+        />
+        <meta property="og:description" content={description} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <main className={styles.main}>
