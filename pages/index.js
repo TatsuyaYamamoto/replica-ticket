@@ -15,6 +15,7 @@ import HelpDialog from "../src/components/HelpDialog";
 const title = "ラブライブ！レプリカチケット発券機";
 const description = `レプリカチケットの発券をサポートするアプリです。Aqoursのライブに行こう！！`;
 const keywords = "ラブライブ！,LoveLive！,Aqours";
+const trackingCode = "UA-127664761-7";
 
 export default function Home() {
   const [inputText, setInputText] = useState(null);
@@ -48,10 +49,26 @@ export default function Home() {
         <meta property="og:url" content="https://replica-ticket.web.app/" />
         <meta
           property="og:image"
-          content="https://replica-ticket.web.app/images/ogp.png"
+          content="https://replica-ticket.web.app/images/ogp.jpg"
         />
         <meta property="og:description" content={description} />
         <meta name="twitter:card" content="summary_large_image" />
+
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${trackingCode}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${trackingCode}');
+          `,
+          }}
+        />
       </Head>
 
       <IconButton

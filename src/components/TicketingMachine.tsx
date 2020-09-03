@@ -56,7 +56,7 @@ const TicketingMachine: FC<TicketingMachineProps> = (props) => {
           `}
         >
           <div>
-            <TextField value={inputValue} onChange={onChange} />
+            <TextField label={`座席`} value={inputValue} onChange={onChange} />
             <br />
             <br />
             <Button
