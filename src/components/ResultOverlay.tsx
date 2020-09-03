@@ -1,9 +1,8 @@
 /** @jsx jsx */
-import React, { FC, MouseEvent, useRef } from "react";
+import React, { FC, MouseEvent, useRef, useState } from "react";
 import { css, jsx } from "@emotion/core";
 
-import { Backdrop, Button } from "@material-ui/core";
-import domtoimage from "dom-to-image";
+import { Backdrop, Button, CircularProgress } from "@material-ui/core";
 
 interface ResultOverlayProps {
   text: string;
@@ -13,18 +12,31 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   const { text, handleClose } = props;
   const open = !!text;
   const ticketRef = useRef(null);
+  const [downloading, setDownloading] = useState(false);
 
   const onClickSaveImage = (e: MouseEvent) => {
     e.stopPropagation();
 
-    domtoimage
-      .toJpeg(ticketRef.current, { quality: 0.95 })
-      .then(function (dataUrl) {
-        const link = document.createElement("a");
-        link.download = "my-image-name.jpeg";
-        link.href = dataUrl;
-        link.click();
-      });
+    setDownloading(true);
+    const name = `ticket_${text}_${Date.now()}.jpeg`;
+    const url = `https://us-central1-replica-ticket.cloudfunctions.net/createImage?text=${text}`;
+
+    const request = new XMLHttpRequest();
+    request.responseType = "blob";
+    request.open("GET", url);
+    request.addEventListener("load", function () {
+      const file = request.response;
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(file);
+      a.download = name;
+      a.click();
+      setDownloading(false);
+    });
+    request.addEventListener("error", function (e) {
+      console.error(e);
+      setDownloading(false);
+    });
+    request.send();
   };
 
   const onClickShare = (e: MouseEvent) => {
@@ -40,70 +52,80 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   };
 
   return (
-    <Backdrop
-      open={open}
-      onClick={handleClose}
-      css={css`
-        z-index: 100 !important;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      `}
-    >
-      <div
-        ref={ticketRef}
+    <>
+      <Backdrop
+        open={open}
+        onClick={handleClose}
         css={css`
+          z-index: 100 !important;
           position: relative;
-          width: 90%;
-        `}
-      >
-        <img
-          src={`/images/ticket_base.jpg`}
-          css={css`
-            width: 100%;
-          `}
-        />
-        <span
-          css={css`
-            position: absolute;
-            font-size: 1.5vw;
-            top: 83%;
-            left: 66%;
-          `}
-        >
-          {text}
-        </span>
-        <span
-          css={css`
-            position: absolute;
-            font-size: 1.5vw;
-            top: 85%;
-            left: 85%;
-          `}
-        >
-          {text}
-        </span>
-      </div>
-      <div
-        css={css`
-          position: fixed;
-          bottom: 0;
-          margin: 20px 0;
-          width: 100%;
-
           display: flex;
-          justify-content: space-around;
+          justify-content: center;
+          align-items: center;
         `}
       >
-        <Button variant="contained" onClick={onClickSaveImage}>
-          画像を保存
-        </Button>
-        <Button variant="contained" onClick={onClickShare}>
-          Twitterでシェア
-        </Button>
-      </div>
-    </Backdrop>
+        <div
+          ref={ticketRef}
+          css={css`
+            position: relative;
+            width: 90%;
+          `}
+        >
+          <img
+            src={`/images/ticket_base.jpg`}
+            css={css`
+              width: 100%;
+            `}
+          />
+          <span
+            css={css`
+              position: absolute;
+              font-size: 1.5vw;
+              top: 83%;
+              left: 66%;
+            `}
+          >
+            {text}
+          </span>
+          <span
+            css={css`
+              position: absolute;
+              font-size: 1.5vw;
+              top: 85%;
+              left: 85%;
+            `}
+          >
+            {text}
+          </span>
+        </div>
+        <div
+          css={css`
+            position: fixed;
+            bottom: 0;
+            margin: 20px 0;
+            width: 100%;
+
+            display: flex;
+            justify-content: space-around;
+          `}
+        >
+          <Button variant="contained" onClick={onClickSaveImage}>
+            画像を保存
+          </Button>
+          <Button variant="contained" onClick={onClickShare}>
+            Twitterでシェア
+          </Button>
+        </div>
+      </Backdrop>
+      <Backdrop
+        open={downloading}
+        css={css`
+          z-index: 200 !important;
+        `}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </>
   );
 };
 

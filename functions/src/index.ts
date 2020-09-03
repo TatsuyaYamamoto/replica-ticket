@@ -43,5 +43,6 @@ export const createImage = https.onRequest(async (request, response) => {
 
   await _exec(command);
 
+  response.set("Access-Control-Allow-Origin", "*");
   response.download(outFile);
 });
