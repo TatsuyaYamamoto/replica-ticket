@@ -83,6 +83,7 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
               font-size: 1.5vw;
               top: 83%;
               left: 66%;
+              white-space: nowrap;
             `}
           >
             {text}
@@ -93,6 +94,7 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
               font-size: 1.5vw;
               top: 85%;
               left: 85%;
+              white-space: nowrap;
             `}
           >
             {text}
