@@ -1,51 +1,32 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+/** @jsx jsx */
+import Head from "next/head";
+
+import { jsx } from "@emotion/core";
+
+import styles from "../styles/Home.module.css";
+import TicketingMachine from "../src/components/TicketingMachine";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Out Ticketing</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Go!{" "}
+          <a href="http://www.lovelive-anime.jp/uranohoshi/news.php?id=6728">
+            Next Sparkling!
+          </a>
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <TicketingMachine />
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+            <p>ラブライブ！に感謝と声援を</p>
           </a>
         </div>
       </main>
@@ -56,10 +37,10 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          Powered by{" "}
+          <a href="http://www.sokontokoro-factory.net/">そこんところ工房</a>
         </a>
       </footer>
     </div>
-  )
+  );
 }
