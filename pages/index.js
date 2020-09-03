@@ -35,7 +35,7 @@ export default function Home() {
             target="_blank"
             className={styles.card}
           >
-            <p>Aqours声援を</p>
+            <p>Aqoursへ声援を</p>
           </a>
         </div>
       </main>

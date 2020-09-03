@@ -40,6 +40,7 @@ const TicketingMachine: FC<TicketingMachineProps> = (props) => {
           background-color: black;
           border-radius: ${unit}px;
           padding: ${unit * 3}px;
+          border: solid ${unit * 0.2}px #444444;
         `}
       >
         <div

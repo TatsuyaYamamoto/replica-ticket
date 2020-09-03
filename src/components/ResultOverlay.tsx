@@ -111,10 +111,14 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
             justify-content: space-around;
           `}
         >
-          <Button variant="contained" onClick={onClickSaveImage}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onClickSaveImage}
+          >
             画像を保存
           </Button>
-          <Button variant="contained" onClick={onClickShare}>
+          <Button variant="contained" color="primary" onClick={onClickShare}>
             Twitterでシェア
           </Button>
         </div>
@@ -125,7 +129,11 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
           z-index: 200 !important;
         `}
       >
-        <CircularProgress color="inherit" />
+        <CircularProgress
+          css={css`
+            color: white;
+          `}
+        />
       </Backdrop>
     </>
   );
