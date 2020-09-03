@@ -18,6 +18,11 @@ const TicketingMachine: FC<TicketingMachineProps> = (props) => {
       return;
     }
 
+    // @ts-ignore
+    window.gtag("event", "issue", {
+      label: inputValue,
+    });
+
     onIssueTicket(inputValue);
   };
 

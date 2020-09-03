@@ -15,6 +15,11 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   const [downloading, setDownloading] = useState(false);
 
   const onClickSaveImage = (e: MouseEvent) => {
+    // @ts-ignore
+    window.gtag("event", "save", {
+      label: text,
+    });
+
     e.stopPropagation();
 
     setDownloading(true);
@@ -40,6 +45,11 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
   };
 
   const onClickShare = (e: MouseEvent) => {
+    // @ts-ignore
+    window.gtag("event", "share", {
+      label: text,
+    });
+
     e.stopPropagation();
     const baseUrl = `https://twitter.com/intent/tweet`;
     const t = encodeURIComponent(

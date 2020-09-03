@@ -22,6 +22,9 @@ export default function Home() {
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
 
   const handleHelpDialog = () => {
+    // @ts-ignore
+    window.gtag("event", "help");
+
     setHelpDialogOpen((prev) => !prev);
   };
 
