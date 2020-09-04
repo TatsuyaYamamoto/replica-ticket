@@ -55,7 +55,7 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
     const t = encodeURIComponent(
       `座席「${text}」のチケットを発券しました！
       
-「Aqours Back In 5th LoveLive! ～Next SPARKLING!!～」に向けて、レプリカチケットの発券しよう！
+「Aqours Back In 5th LoveLive! ～Next SPARKLING!!～」に向けて、レプリカチケットを発券しよう！
 
 `
     );

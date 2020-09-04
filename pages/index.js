@@ -52,7 +52,7 @@ export default function Home() {
         <meta property="og:url" content="https://replica-ticket.web.app/" />
         <meta
           property="og:image"
-          content="https://replica-ticket.web.app/images/ogp.jpg"
+          content="https://replica-ticket.web.app/images/ogp.jpg?v=2"
         />
         <meta property="og:description" content={description} />
         <meta name="twitter:card" content="summary_large_image" />

@@ -86,7 +86,7 @@ const TicketingMachine: FC<TicketingMachineProps> = (props) => {
             color: white;
           `}
         >
-          Aqouポート
+          Aqoursポート
         </span>
       </div>
     </div>
