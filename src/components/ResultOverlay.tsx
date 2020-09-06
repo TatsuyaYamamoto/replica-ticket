@@ -3,6 +3,13 @@ import React, { FC, MouseEvent, useRef, useState } from "react";
 import { css, jsx } from "@emotion/core";
 
 import { Backdrop, Button, CircularProgress } from "@material-ui/core";
+import {
+  createTicketImage,
+  downloadFileWithDom,
+  issueTwitterIntent,
+  uploadMedia,
+} from "../utils/networks";
+import { imageToBase64 } from "../utils/io";
 
 interface ResultOverlayProps {
   text: string;
@@ -23,25 +30,17 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
     e.stopPropagation();
 
     setDownloading(true);
-    const name = `ticket_${text}_${Date.now()}.jpeg`;
-    const url = `https://us-central1-replica-ticket.cloudfunctions.net/createImage?text=${text}`;
 
-    const request = new XMLHttpRequest();
-    request.responseType = "blob";
-    request.open("GET", url);
-    request.addEventListener("load", function () {
-      const file = request.response;
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(file);
-      a.download = name;
-      a.click();
-      setDownloading(false);
-    });
-    request.addEventListener("error", function (e) {
-      console.error(e);
-      setDownloading(false);
-    });
-    request.send();
+    createTicketImage(text)
+      .then((file) => {
+        const name = `ticket_${text}_${Date.now()}.jpeg`;
+        downloadFileWithDom(file, name);
+        setDownloading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setDownloading(false);
+      });
   };
 
   const onClickShare = (e: MouseEvent) => {
@@ -51,22 +50,29 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
     });
 
     e.stopPropagation();
-    const baseUrl = `https://twitter.com/intent/tweet`;
-    const t = encodeURIComponent(
-      `座席「${text}」のチケットを発券しました！
-      
-「Aqours Back In 5th LoveLive! ～Next SPARKLING!!～」に向けて、レプリカチケットを発券しよう！
+    issueTwitterIntent(text);
+  };
 
-`
-    );
-    const hashtags = [
-      "lovelive",
-      "そこんところ工房",
-      "レプリカチケット発券機",
-    ].join(",");
-    const url = encodeURIComponent(`https://replica-ticket.web.app/`);
+  const onClickShareWithImage = () => {
+    // @ts-ignore
+    window.gtag("event", "share-with-image", {
+      label: text,
+    });
 
-    window.open(`${baseUrl}?text=${t}&hashtags=${hashtags}&url=${url}`);
+    setDownloading(true);
+
+    createTicketImage(text)
+      .then((file) => imageToBase64(file))
+      .then((mediaData) => uploadMedia(mediaData))
+      .then((res) => res.json())
+      .then(({ mediaUrl }) => {
+        issueTwitterIntent(text, mediaUrl);
+        setDownloading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setDownloading(false);
+      });
   };
 
   return (
@@ -149,12 +155,16 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
             width: 100%;
 
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-around;
           `}
         >
           <Button
             variant="contained"
             color="primary"
+            css={css`
+              margin: 10px;
+            `}
             onClick={onClickSaveImage}
           >
             画像を保存
@@ -163,11 +173,23 @@ const ResultOverlay: FC<ResultOverlayProps> = (props) => {
             variant="contained"
             color="primary"
             css={css`
+              margin: 10px;
               text-transform: none !important;
             `}
             onClick={onClickShare}
           >
             Twitterでシェア
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            css={css`
+              margin: 10px;
+              text-transform: none !important;
+            `}
+            onClick={onClickShareWithImage}
+          >
+            画像つきでTwitterでシェア
           </Button>
         </div>
       </Backdrop>
